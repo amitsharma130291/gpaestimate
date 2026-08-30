@@ -1,0 +1,51 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import StaticSiteHeader from "@/components/StaticSiteHeader.astro";
+
+const POPULAR_LINKS = [
+  { label: "GPA Calculator", href: "/", description: "Enter grades and credits, see your GPA update instantly." },
+  { label: "Weighted GPA Calculator", href: "/weighted-gpa-calculator", description: "Honors and AP/IB bonus points included." },
+  { label: "High School GPA Calculator", href: "/high-school-gpa-calculator", description: "Build a full schedule, weighted and unweighted." },
+  { label: "GPA Predictor", href: "/gpa-predictor", description: "Find the grades you need to hit a target GPA." },
+  { label: "Cumulative GPA Calculator", href: "/cumulative-gpa-calculator", description: "Combine every semester into one running average." },
+  { label: "Final Grade Calculator", href: "/final-grade-calculator", description: "See what you need on the final exam." },
+];
+---
+
+<BaseLayout
+  title="Page Not Found | gpaestimate.com"
+  description="This page doesn't exist. Find the GPA calculator you're looking for from the links below."
+  noindex
+>
+  <StaticSiteHeader />
+  <main id="main-content" class="mx-auto max-w-2xl px-4 py-16 text-center sm:px-6 sm:py-20">
+    <p class="text-sm font-semibold uppercase tracking-[0.18em] text-graphite-muted">404</p>
+    <h1 class="mt-3 text-3xl font-bold text-graphite sm:text-4xl">We couldn't find that page</h1>
+    <p class="mt-3 text-[15px] leading-relaxed text-graphite-muted">
+      The link might be outdated, or the page may have moved. Here are the tools people usually come here for.
+    </p>
+
+    <ul class="mt-8 grid grid-cols-1 gap-3 text-left sm:grid-cols-2">
+      {
+        POPULAR_LINKS.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class="block h-full rounded-card border border-border bg-white p-4 transition-colors duration-140 hover:border-pine-700 hover:bg-mist"
+            >
+              <p class="font-semibold text-graphite">{link.label}</p>
+              <p class="mt-1 text-sm text-graphite-muted">{link.description}</p>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <a
+      href="/"
+      class="mt-8 inline-flex items-center justify-center rounded-pill bg-pine-900 px-5 py-2.5 text-[15px] font-semibold text-cream transition-colors duration-140 hover:bg-pine-800"
+    >
+      Back to the GPA Calculator
+    </a>
+  </main>
+</BaseLayout>
