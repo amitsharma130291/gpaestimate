@@ -1,0 +1,42 @@
+---
+interface Props {
+  currentPath?: string;
+}
+const { currentPath = "" } = Astro.props;
+
+const navLinks = [
+  { label: "GPA Calculator", href: "/" },
+  { label: "Predictor", href: "/gpa-predictor" },
+  { label: "Universities", href: "/university-calculators" },
+  { label: "Resources", href: "/resources" },
+];
+---
+
+<header class="border-b border-border bg-white">
+  <div class="mx-auto flex max-w-[1440px] items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-10">
+    <a href="/" class="site-logo">
+      <img src="/logo.png" alt="GPA Estimate" width="2040" height="497" />
+    </a>
+    <nav aria-label="Primary" class="hidden items-center gap-1 lg:flex">
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            aria-current={link.href === currentPath ? "page" : undefined}
+            class={`rounded-pill px-3 py-2 text-sm font-medium transition-colors duration-140 hover:bg-mist ${
+              link.href === currentPath ? "text-pine-900" : "text-graphite"
+            }`}
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+    <a
+      href="/"
+      class="rounded-pill bg-pine-900 px-4 py-2 text-sm font-semibold text-cream transition-colors duration-140 hover:bg-pine-800"
+    >
+      Open Calculator
+    </a>
+  </div>
+</header>

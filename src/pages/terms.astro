@@ -1,0 +1,25 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import StaticSiteHeader from "@/components/StaticSiteHeader.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+---
+
+<BaseLayout
+  title="Terms | gpaestimate.com"
+  description="Terms of use for gpaestimate.com."
+>
+  <StaticSiteHeader currentPath="/terms" />
+  <Breadcrumbs items={[{ label: "GPA Calculator", href: "/" }, { label: "Terms" }]} />
+  <main id="main-content" class="mx-auto max-w-2xl px-4 py-14 sm:px-6">
+    <h1 class="text-3xl font-bold text-graphite sm:text-4xl">Terms</h1>
+    <p class="mt-4 text-[15px] leading-relaxed text-graphite-muted">
+      gpaestimate.com is provided free of charge for educational and informational purposes.
+      Calculations are estimates based on the grading scale you select and the numbers you enter
+      — they are not a substitute for your official transcript and should be verified against it.
+    </p>
+    <p class="mt-4 text-[15px] leading-relaxed text-graphite-muted">
+      We make no guarantee that results match any specific institution's official GPA, standing,
+      or eligibility determinations. Use of this site is at your own discretion.
+    </p>
+  </main>
+</BaseLayout>

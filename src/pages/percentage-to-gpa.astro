@@ -1,0 +1,19 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import StaticSiteHeader from "@/components/StaticSiteHeader.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import ComingSoon from "@/components/ComingSoon.astro";
+---
+
+<BaseLayout
+  title="Percentage to GPA Converter | gpaestimate.com"
+  description="Translate a percentage grade into an estimated GPA value."
+  noindex
+>
+  <StaticSiteHeader currentPath="/percentage-to-gpa" />
+  <Breadcrumbs items={[{ label: "GPA Calculator", href: "/" }, { label: "Percentage to GPA Converter" }]} />
+  <ComingSoon
+    heading="Percentage to GPA Converter"
+    description="A percentage-to-GPA converter, with adjustable school scales, is on its way."
+  />
+</BaseLayout>

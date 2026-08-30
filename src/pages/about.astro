@@ -1,0 +1,32 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import StaticSiteHeader from "@/components/StaticSiteHeader.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+---
+
+<BaseLayout
+  title="About | gpaestimate.com"
+  description="What gpaestimate.com is, and the principles behind how it's built."
+>
+  <StaticSiteHeader currentPath="/about" />
+  <Breadcrumbs items={[{ label: "GPA Calculator", href: "/" }, { label: "About" }]} />
+  <main id="main-content" class="mx-auto max-w-2xl px-4 py-14 sm:px-6">
+    <h1 class="text-3xl font-bold text-graphite sm:text-4xl">About gpaestimate.com</h1>
+    <p class="mt-4 text-[15px] leading-relaxed text-graphite-muted">
+      gpaestimate.com is a free set of GPA tools for high-school and college students: a live
+      calculator, a predictor for future grades, and grading-scale references — built to give
+      immediate, actionable feedback rather than just a single number.
+    </p>
+    <p class="mt-4 text-[15px] leading-relaxed text-graphite-muted">
+      No account is required, and calculator data stays on your device unless you explicitly save
+      a semester. See our <a href="/methodology" class="font-medium text-pine-800 underline decoration-pine-800/30 underline-offset-2 hover:text-pine-900">methodology</a>
+      for exactly how the numbers are calculated.
+    </p>
+    <a
+      href="/"
+      class="mt-8 inline-flex items-center justify-center rounded-pill bg-pine-900 px-5 py-2.5 text-[15px] font-semibold text-cream transition-colors duration-140 hover:bg-pine-800"
+    >
+      Try the GPA Calculator
+    </a>
+  </main>
+</BaseLayout>

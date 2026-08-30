@@ -1,0 +1,137 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { WeightedGpaTool } from "@/components/calculator/WeightedGpaTool";
+import { FaqAccordion, type FaqItem } from "@/components/calculator/FaqAccordion";
+
+const FAQ_ITEMS: FaqItem[] = [
+  {
+    question: "How do I calculate my GPA for high school?",
+    answer:
+      "List each course with its letter grade and credit hours, multiply each grade's point value by its credits, add those quality points together, then divide by total credits. Add a course-level bonus for Honors or AP classes if your school reports a weighted GPA.",
+  },
+  {
+    question: "Is a 3.7 GPA an A or a B?",
+    answer:
+      "A 3.7 GPA on the standard scale corresponds to an A- average — it means your grades are mostly A's and A-'s, not a straight B average (which would be closer to 3.0).",
+  },
+  {
+    question: "Is a 2.7 GPA bad in high school?",
+    answer:
+      "A 2.7 sits in the B-/C+ range — below average for competitive college admissions but generally fine for graduation and many state schools. \"Bad\" depends heavily on your target schools' typical admitted GPA.",
+  },
+  {
+    question: "Is a 3.0 GPA a 75%?",
+    answer:
+      "Not exactly — a 3.0 GPA corresponds to a straight-B average, which on most schools' percentage scales is closer to 80–87%, not 75%. The exact percentage-to-GPA mapping varies by school.",
+  },
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "High School GPA Calculator",
+  url: "https://gpaestimate.com/high-school-gpa-calculator/",
+  applicationCategory: "EducationApplication",
+  operatingSystem: "Any",
+  description:
+    "Calculate your high school GPA with support for Regular, Honors, and AP/IB course levels, weighted and unweighted side by side.",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+};
+
+const faqStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQ_ITEMS.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: { "@type": "Answer", text: item.answer },
+  })),
+};
+---
+
+<BaseLayout
+  title="High School GPA Calculator (Weighted) | gpaestimate.com"
+  description="Calculate your high school GPA with Regular, Honors, and AP/IB course levels. See weighted and unweighted GPA side by side, updated instantly."
+  structuredData={structuredData}
+>
+  <WeightedGpaTool
+    currentPath="/high-school-gpa-calculator"
+    breadcrumbLabel="High School GPA Calculator"
+    heading="High School GPA Calculator"
+    subtitle="Add every class on your schedule, mark which ones are Honors or AP/IB, and get both your weighted and unweighted GPA instantly."
+    initialCourses={[
+      { id: "hsgc-1", name: "AP U.S. History", grade: "A", credits: "1", level: "ap-ib" },
+      { id: "hsgc-2", name: "Honors Geometry", grade: "B+", credits: "1", level: "honors" },
+      { id: "hsgc-3", name: "Spanish II", grade: "A-", credits: "1", level: "regular" },
+      { id: "hsgc-4", name: "Physical Education", grade: "A", credits: "0.5", level: "regular" },
+    ]}
+    addButtonLabel="Add another class"
+    emptyStateLabel="No classes yet — add your first period below to start building your schedule."
+    panelNote="Ask your counselor which of these your school's transcript actually weights — policies vary by district."
+    client:load
+  />
+
+  <div class="bg-porcelain">
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(faqStructuredData)} />
+
+    <section aria-labelledby="hs-gpa-scale" class="reveal-on-scroll px-4 pt-12 sm:px-6 sm:pt-14 lg:px-10 lg:pt-16">
+      <div class="mx-auto max-w-[820px]">
+        <h2 id="hs-gpa-scale" class="text-2xl font-bold text-graphite sm:text-3xl">
+          What counts toward your high school GPA
+        </h2>
+        <p class="mt-3 text-[15px] leading-relaxed text-graphite-muted">
+          Most high schools calculate GPA the same way colleges do — quality points (grade value ×
+          credits) divided by total credits — but many also report a second, weighted number that
+          rewards harder course loads. Use the level dropdown on each row above to mark Honors or
+          AP/IB courses; the calculator handles both scales at once so you don't need two tools.
+        </p>
+        <div class="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
+          <div class="rounded-card border border-border bg-white p-4">
+            <p class="text-sm font-semibold text-graphite">Regular</p>
+            <p class="mt-1 text-sm text-graphite-muted">Standard 4.0 scale, no bonus.</p>
+          </div>
+          <div class="rounded-card border border-border bg-white p-4">
+            <p class="text-sm font-semibold text-graphite">Honors</p>
+            <p class="mt-1 text-sm text-graphite-muted">+0.5 grade points on a passing grade.</p>
+          </div>
+          <div class="rounded-card border border-border bg-white p-4">
+            <p class="text-sm font-semibold text-graphite">AP / IB / Dual Enrollment</p>
+            <p class="mt-1 text-sm text-graphite-muted">+1.0 grade points on a passing grade.</p>
+          </div>
+        </div>
+        <p class="mt-4 text-sm text-graphite-muted">
+          These bonus values are common conventions, not universal rules —{" "}
+          <a
+            href="/grading-scales"
+            class="font-medium text-pine-800 underline decoration-pine-800/30 underline-offset-2 hover:text-pine-900"
+          >
+            check your school's official grading policy
+          </a>{" "}
+          if your transcript needs to match exactly.
+        </p>
+      </div>
+    </section>
+
+    <section aria-labelledby="hs-faq" class="reveal-on-scroll px-4 pt-12 sm:px-6 sm:pt-14 lg:px-10 lg:pt-16">
+      <div class="mx-auto max-w-[820px]">
+        <h2 id="hs-faq" class="text-2xl font-bold text-graphite sm:text-3xl">
+          Frequently asked questions
+        </h2>
+        <div class="mt-6">
+          <FaqAccordion items={FAQ_ITEMS} client:visible />
+        </div>
+      </div>
+    </section>
+
+    <section class="reveal-on-scroll px-4 pb-16 pt-12 sm:px-6 sm:pb-20 sm:pt-14 lg:px-10 lg:pb-24 lg:pt-16">
+      <div class="mx-auto max-w-[820px] text-center">
+        <a
+          href="/gpa-predictor/"
+          class="font-medium text-pine-800 underline decoration-pine-800/30 underline-offset-2 hover:text-pine-900"
+        >
+          Want to know what your GPA will be after next semester? Try the GPA Predictor →
+        </a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

@@ -1,0 +1,19 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import StaticSiteHeader from "@/components/StaticSiteHeader.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import ComingSoon from "@/components/ComingSoon.astro";
+---
+
+<BaseLayout
+  title="GPA Resources | gpaestimate.com"
+  description="Guides on GPA scales, transcripts, and academic standing."
+  noindex
+>
+  <StaticSiteHeader currentPath="/resources" />
+  <Breadcrumbs items={[{ label: "GPA Calculator", href: "/" }, { label: "Resources" }]} />
+  <ComingSoon
+    heading="Resources"
+    description="Guides on grading scales, transcripts, and academic standing are coming soon."
+  />
+</BaseLayout>

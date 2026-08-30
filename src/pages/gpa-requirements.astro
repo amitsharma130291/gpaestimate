@@ -1,0 +1,19 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import StaticSiteHeader from "@/components/StaticSiteHeader.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import ComingSoon from "@/components/ComingSoon.astro";
+---
+
+<BaseLayout
+  title="GPA Requirements by Program | gpaestimate.com"
+  description="Typical GPA requirements for admissions, scholarships, and academic standing, still being built."
+  noindex
+>
+  <StaticSiteHeader currentPath="/gpa-requirements" />
+  <Breadcrumbs items={[{ label: "GPA Calculator", href: "/" }, { label: "GPA Requirements" }]} />
+  <ComingSoon
+    heading="GPA Requirements"
+    description="A guide to how admissions, scholarship, and standing requirements vary is on its way."
+  />
+</BaseLayout>

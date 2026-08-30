@@ -1,0 +1,84 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { GpaPredictorApp } from "@/components/calculator/GpaPredictorApp";
+import { FaqAccordion, type FaqItem } from "@/components/calculator/FaqAccordion";
+
+const FAQ_ITEMS: FaqItem[] = [
+  {
+    question: "How does the GPA Predictor work?",
+    answer:
+      "Enter the credits and quality points you've already earned, set a target GPA, and choose how many credits you have left. The predictor solves for the average grade you'd need across those remaining credits to land on your target.",
+  },
+  {
+    question: "Where do I find my current credits and quality points?",
+    answer:
+      "If you've saved a semester on the GPA Calculator, the predictor loads those totals automatically. Otherwise, they're on your unofficial transcript, or you can calculate them fresh on the main calculator first.",
+  },
+  {
+    question: "What if the GPA I need is above 4.0?",
+    answer:
+      "That means the target isn't mathematically reachable within the remaining credits you entered — try a lower target, or add more remaining credits to spread the improvement over a longer stretch.",
+  },
+  {
+    question: "Can I use this to plan for scholarship or Dean's List eligibility?",
+    answer:
+      "Yes — set your target GPA to whatever threshold your scholarship, Dean's List, or program requires, and the predictor shows exactly what average you need going forward. Confirm the exact threshold with your institution first, since these vary.",
+  },
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "GPA Predictor",
+  url: "https://gpaestimate.com/gpa-predictor/",
+  applicationCategory: "EducationApplication",
+  operatingSystem: "Any",
+  description:
+    "Predict the GPA you need in upcoming courses to reach a target GPA, based on your current credits and quality points.",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+};
+
+const faqStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQ_ITEMS.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: { "@type": "Answer", text: item.answer },
+  })),
+};
+---
+
+<BaseLayout
+  title="GPA Predictor — What Grades Do You Need? | gpaestimate.com"
+  description="Predict what GPA you need in upcoming courses to reach a target, based on your current credits and quality points."
+  structuredData={structuredData}
+>
+  <GpaPredictorApp client:load />
+
+  <div class="bg-porcelain">
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(faqStructuredData)} />
+
+    <section aria-labelledby="predictor-faq" class="reveal-on-scroll px-4 pt-12 sm:px-6 sm:pt-14 lg:px-10 lg:pt-16">
+      <div class="mx-auto max-w-[820px]">
+        <h2 id="predictor-faq" class="text-2xl font-bold text-graphite sm:text-3xl">
+          Frequently asked questions
+        </h2>
+        <div class="mt-6">
+          <FaqAccordion items={FAQ_ITEMS} client:visible />
+        </div>
+      </div>
+    </section>
+
+    <section class="reveal-on-scroll px-4 pb-16 pt-12 sm:px-6 sm:pb-20 sm:pt-14 lg:px-10 lg:pb-24 lg:pt-16">
+      <div class="mx-auto max-w-[820px] text-center">
+        <a
+          href="/"
+          class="font-medium text-pine-800 underline decoration-pine-800/30 underline-offset-2 hover:text-pine-900"
+        >
+          Need to calculate this semester's GPA first? Open the GPA Calculator →
+        </a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

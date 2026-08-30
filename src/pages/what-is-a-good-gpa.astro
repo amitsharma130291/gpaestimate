@@ -1,0 +1,123 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import StaticSiteHeader from "@/components/StaticSiteHeader.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import { FaqAccordion, type FaqItem } from "@/components/calculator/FaqAccordion";
+
+const FAQ_ITEMS: FaqItem[] = [
+  {
+    question: "What counts as a good GPA in high school?",
+    answer:
+      "On an unweighted 4.0 scale, most competitive colleges look for 3.5 or above. On a weighted scale (which many high schools report instead), a strong applicant profile is often closer to 4.0–4.5, since Honors and AP courses push the ceiling above 4.0.",
+  },
+  {
+    question: "What counts as a good GPA in college?",
+    answer:
+      "A 3.0 is generally considered solid, 3.5+ is strong, and most graduate and professional programs expect at least 3.0–3.5 depending on competitiveness. Employers screening by GPA typically use a 3.0 floor.",
+  },
+  {
+    question: "Is a lower GPA in a harder major viewed differently?",
+    answer:
+      "Many admissions committees and employers do account for major difficulty and course rigor, but this isn't universal or formalized — it depends entirely on who's reading the transcript. Don't assume it will be discounted automatically.",
+  },
+  {
+    question: "What's the average GPA?",
+    answer:
+      "Average GPA varies by institution, region, and grading era, and reliable up-to-date figures differ by source — check your own school's published statistics (often in a common data set or institutional research report) rather than relying on a single generic number.",
+  },
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQ_ITEMS.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: { "@type": "Answer", text: item.answer },
+  })),
+};
+---
+
+<BaseLayout
+  title="What Is a Good GPA? | gpaestimate.com"
+  description="What counts as a good GPA differs by school level, weighted vs. unweighted scale, and what you're using it for — here's how to read your number."
+  structuredData={structuredData}
+>
+  <StaticSiteHeader currentPath="/what-is-a-good-gpa" />
+  <Breadcrumbs items={[{ label: "GPA Calculator", href: "/" }, { label: "What Is a Good GPA?" }]} />
+
+  <main id="main-content" class="mx-auto max-w-2xl px-4 py-12 sm:px-6">
+    <h1 class="text-3xl font-bold text-graphite sm:text-4xl">What is a good GPA?</h1>
+    <p class="mt-3 text-[15px] leading-relaxed text-graphite-muted">
+      There's no single answer — "good" depends on whether you're being measured on a weighted or
+      unweighted scale, at the high school or college level, and for what purpose. Here's how to
+      read your number in each context.
+    </p>
+
+    <h2 class="mt-9 text-xl font-semibold text-graphite">By school level</h2>
+    <div class="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
+      <div class="rounded-card border border-border bg-white p-5">
+        <h3 class="font-semibold text-graphite">High school</h3>
+        <p class="mt-2 text-sm text-graphite-muted">
+          Unweighted: 3.5+ is generally viewed as strong for competitive college admissions.
+          Weighted: many schools report on a 4.5–5.0 scale, so "good" shifts upward accordingly —
+          compare like with like.
+        </p>
+      </div>
+      <div class="rounded-card border border-border bg-white p-5">
+        <h3 class="font-semibold text-graphite">College</h3>
+        <p class="mt-2 text-sm text-graphite-muted">
+          3.0 is a common baseline for graduate-school eligibility and many employer GPA
+          screens. 3.5+ is strong; 3.7+ is typically what's expected for the most
+          selective graduate and professional programs.
+        </p>
+      </div>
+    </div>
+
+    <h2 class="mt-9 text-xl font-semibold text-graphite">By what you're using it for</h2>
+    <ul class="mt-3 space-y-2.5">
+      <li class="rounded-card border border-border bg-white px-4 py-3 text-[15px] text-graphite">
+        <strong>College admissions:</strong> Context matters as much as the number — course
+        rigor, trend (rising vs. falling), and your target schools' admitted-student averages all
+        factor in.
+      </li>
+      <li class="rounded-card border border-border bg-white px-4 py-3 text-[15px] text-graphite">
+        <strong>Scholarships:</strong> Thresholds are set per-award, commonly between 3.0 and 3.5
+        — read the specific scholarship's requirements rather than assuming.
+      </li>
+      <li class="rounded-card border border-border bg-white px-4 py-3 text-[15px] text-graphite">
+        <strong>Grad school & professional programs:</strong> Minimums are usually published
+        directly on the program's admissions page — verify against that, not a general rule.
+      </li>
+      <li class="rounded-card border border-border bg-white px-4 py-3 text-[15px] text-graphite">
+        <strong>Job applications:</strong> Some employers screen at a 3.0 floor for early-career
+        roles; many don't ask for GPA at all past your first job or two.
+      </li>
+    </ul>
+
+    <p class="mt-6 text-sm text-graphite-muted">
+      These are common patterns, not fixed rules — every institution, program, and employer sets
+      its own bar. When a specific number matters, confirm it directly with that institution.
+    </p>
+
+    <h2 class="mt-9 text-xl font-semibold text-graphite">Frequently asked questions</h2>
+    <div class="mt-4">
+      <FaqAccordion items={FAQ_ITEMS} client:visible />
+    </div>
+
+    <div class="mt-10 flex flex-col gap-3 sm:flex-row">
+      <a
+        href="/"
+        class="inline-flex items-center justify-center rounded-pill bg-pine-900 px-5 py-2.5 text-[15px] font-semibold text-cream transition-colors duration-140 hover:bg-pine-800"
+      >
+        Calculate your GPA
+      </a>
+      <a
+        href="/is-a-3.5-gpa-good/"
+        class="inline-flex items-center justify-center rounded-pill border border-border px-5 py-2.5 text-[15px] font-semibold text-graphite transition-colors duration-140 hover:bg-mist"
+      >
+        Is a 3.5 GPA specifically good?
+      </a>
+    </div>
+  </main>
+</BaseLayout>

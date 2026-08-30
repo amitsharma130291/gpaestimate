@@ -1,0 +1,19 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import StaticSiteHeader from "@/components/StaticSiteHeader.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import ComingSoon from "@/components/ComingSoon.astro";
+---
+
+<BaseLayout
+  title="University Grading Scales | gpaestimate.com"
+  description="A directory of how individual universities score letter grades, still being built."
+  noindex
+>
+  <StaticSiteHeader currentPath="/grading-scales" />
+  <Breadcrumbs items={[{ label: "GPA Calculator", href: "/" }, { label: "Grading Scales" }]} />
+  <ComingSoon
+    heading="University Grading Scales"
+    description="A directory of grading-scale variations by institution is on its way."
+  />
+</BaseLayout>

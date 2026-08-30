@@ -1,0 +1,84 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { FinalGradeTool } from "@/components/calculator/FinalGradeTool";
+import { FaqAccordion, type FaqItem } from "@/components/calculator/FaqAccordion";
+
+const FAQ_ITEMS: FaqItem[] = [
+  {
+    question: "How do I find my final exam's weight?",
+    answer:
+      "Check your course syllabus — instructors almost always list how much each component (homework, midterms, final exam) counts toward your overall grade, usually as a percentage.",
+  },
+  {
+    question: "What if I don't know my current grade?",
+    answer:
+      "Estimate it from your gradebook: average your scores so far, weighted by each assignment's share of the grade if your class uses that system. Many schools' online portals show a running current grade directly.",
+  },
+  {
+    question: "What does it mean if the needed score is above 100%?",
+    answer:
+      "It means the target grade isn't reachable through the final exam alone under the given weighting — you'd need extra credit, a grade replacement policy, or a lower target to close the gap.",
+  },
+  {
+    question: "Does this work for finals worth 100% of the grade?",
+    answer:
+      "Yes — set the weight to 100 and the calculator will tell you that you need to score exactly your desired final grade on the exam, since nothing else factors in.",
+  },
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "Final Grade Calculator",
+  url: "https://gpaestimate.com/final-grade-calculator/",
+  applicationCategory: "EducationApplication",
+  operatingSystem: "Any",
+  description:
+    "Find the score you need on your final exam to reach a target overall course grade, based on your current grade and the exam's weight.",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+};
+
+const faqStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQ_ITEMS.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: { "@type": "Answer", text: item.answer },
+  })),
+};
+---
+
+<BaseLayout
+  title="Final Grade Calculator (Exam Score) | gpaestimate.com"
+  description="Find the score you need on your final exam to reach a target overall course grade, instantly."
+  structuredData={structuredData}
+>
+  <FinalGradeTool currentPath="/final-grade-calculator" client:load />
+
+  <div class="bg-porcelain">
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(faqStructuredData)} />
+
+    <section aria-labelledby="final-grade-faq" class="reveal-on-scroll px-4 pt-12 sm:px-6 sm:pt-14 lg:px-10 lg:pt-16">
+      <div class="mx-auto max-w-[820px]">
+        <h2 id="final-grade-faq" class="text-2xl font-bold text-graphite sm:text-3xl">
+          Frequently asked questions
+        </h2>
+        <div class="mt-6">
+          <FaqAccordion items={FAQ_ITEMS} client:visible />
+        </div>
+      </div>
+    </section>
+
+    <section class="reveal-on-scroll px-4 pb-16 pt-12 sm:px-6 sm:pb-20 sm:pt-14 lg:px-10 lg:pb-24 lg:pt-16">
+      <div class="mx-auto max-w-[820px] text-center">
+        <a
+          href="/"
+          class="font-medium text-pine-800 underline decoration-pine-800/30 underline-offset-2 hover:text-pine-900"
+        >
+          Once your final grade is in, see how it affects your GPA →
+        </a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

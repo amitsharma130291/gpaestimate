@@ -1,0 +1,133 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import StaticSiteHeader from "@/components/StaticSiteHeader.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import { FaqAccordion, type FaqItem } from "@/components/calculator/FaqAccordion";
+
+const FAQ_ITEMS: FaqItem[] = [
+  {
+    question: "Why does GPA use credits at all, instead of a simple average of grades?",
+    answer:
+      "Because courses aren't equal in size. A 4-credit course represents four times the coursework of a 1-credit course, so it should move your average four times as much. Weighting by credits is what makes that fair.",
+  },
+  {
+    question: "What's the difference between GPA and a percentage grade?",
+    answer:
+      "A percentage grade (like 91%) describes one assignment or one course. GPA is a weighted average of grade-point values across every course you've taken — the two measure different things and don't convert directly without knowing your school's percentage-to-GPA scale.",
+  },
+  {
+    question: "Do all schools use the same 4.0 scale?",
+    answer:
+      "No. Most U.S. colleges use a 4.0 plus/minus scale, but some cap an A+ at 4.0 while others use 4.33. High schools often add weighting for Honors/AP courses on top of that. Always check your specific institution's published scale.",
+  },
+  {
+    question: "How is GPA rounded?",
+    answer:
+      "Most schools round the final GPA to two decimal places after dividing total quality points by total credits — not at each individual course. Rounding grade-by-grade before summing can shift the final number slightly, which is a common source of small discrepancies between calculators.",
+  },
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQ_ITEMS.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: { "@type": "Answer", text: item.answer },
+  })),
+};
+---
+
+<BaseLayout
+  title="How GPA Works | gpaestimate.com"
+  description="A plain-language explanation of quality points, grade point averages, and how grading scales differ, with a worked example."
+  structuredData={structuredData}
+>
+  <StaticSiteHeader currentPath="/how-gpa-works" />
+  <Breadcrumbs items={[{ label: "GPA Calculator", href: "/" }, { label: "How GPA Works" }]} />
+  <main id="main-content" class="mx-auto max-w-2xl px-4 py-12 sm:px-6">
+    <h1 class="text-3xl font-bold text-graphite sm:text-4xl">How GPA works</h1>
+    <p class="mt-3 text-[15px] leading-relaxed text-graphite-muted">
+      Your Grade Point Average (GPA) converts letter grades into a single number so schools can
+      compare performance across different courses and credit loads. It comes down to three steps.
+    </p>
+
+    <h2 class="mt-8 text-xl font-semibold text-graphite">1. Grades become points</h2>
+    <p class="mt-2 text-[15px] leading-relaxed text-graphite-muted">
+      Each letter grade maps to a point value on a scale — most commonly 4.0 for an A down to 0
+      for an F. Many schools also use plus/minus grades, worth roughly 0.3 more or less than the
+      base letter.
+    </p>
+
+    <h2 class="mt-8 text-xl font-semibold text-graphite">2. Points become quality points</h2>
+    <p class="mt-2 text-[15px] leading-relaxed text-graphite-muted">
+      Multiply each course's grade points by its credit hours. A 4-credit course graded A- earns
+      3.7 × 4 = 14.8 quality points — a 1-credit course with the same grade only earns 3.7.
+    </p>
+
+    <h2 class="mt-8 text-xl font-semibold text-graphite">3. Quality points become your GPA</h2>
+    <p class="mt-2 text-[15px] leading-relaxed text-graphite-muted">
+      Add up quality points across every course, then divide by total credits attempted. That
+      average is your GPA for the semester — or, across every semester you've taken, your
+      cumulative GPA.
+    </p>
+
+    <h2 class="mt-9 text-xl font-semibold text-graphite">A worked example</h2>
+    <p class="mt-2 text-[15px] leading-relaxed text-graphite-muted">
+      Say you took two courses: a 3-credit course graded B (3.0 points) and a 5-credit course
+      graded A- (3.7 points).
+    </p>
+    <div class="mt-4 overflow-x-auto">
+      <table class="w-full min-w-[360px] border-collapse overflow-hidden rounded-panel border border-border bg-white text-left text-sm">
+        <caption class="sr-only">Worked example combining a B and an A- course</caption>
+        <thead>
+          <tr class="bg-mist text-xs font-semibold uppercase tracking-wide text-graphite-muted">
+            <th scope="col" class="px-4 py-2">Grade</th>
+            <th scope="col" class="px-4 py-2">Points</th>
+            <th scope="col" class="px-4 py-2">Credits</th>
+            <th scope="col" class="px-4 py-2">Quality points</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-t border-border">
+            <td class="px-4 py-2 text-graphite">B</td>
+            <td class="px-4 py-2 tabular-nums text-graphite-muted">3.0</td>
+            <td class="px-4 py-2 tabular-nums text-graphite-muted">3</td>
+            <td class="px-4 py-2 tabular-nums font-medium text-graphite">9.0</td>
+          </tr>
+          <tr class="border-t border-border">
+            <td class="px-4 py-2 text-graphite">A-</td>
+            <td class="px-4 py-2 tabular-nums text-graphite-muted">3.7</td>
+            <td class="px-4 py-2 tabular-nums text-graphite-muted">5</td>
+            <td class="px-4 py-2 tabular-nums font-medium text-graphite">18.5</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="mt-3 text-[15px] leading-relaxed text-graphite-muted">
+      Total quality points: 9.0 + 18.5 = 27.5. Total credits: 3 + 5 = 8. GPA: 27.5 ÷ 8 =
+      <strong> 3.44</strong> — closer to the A- than a simple 50/50 average of B and A- would
+      suggest, because the A- carried more credits.
+    </p>
+
+    <h2 class="mt-9 text-xl font-semibold text-graphite">Semester GPA vs. cumulative GPA</h2>
+    <p class="mt-2 text-[15px] leading-relaxed text-graphite-muted">
+      The steps above work identically whether you're calculating one semester or your whole
+      academic career — the only difference is which courses you include. A semester GPA uses
+      just that term's courses; a cumulative GPA uses every course, every term, combined into one
+      running average.
+    </p>
+
+    <h2 class="mt-9 text-xl font-semibold text-graphite">Frequently asked questions</h2>
+    <div class="mt-4">
+      <FaqAccordion items={FAQ_ITEMS} client:visible />
+    </div>
+
+    <a
+      href="/"
+      class="mt-9 inline-flex items-center justify-center rounded-pill bg-pine-900 px-5 py-2.5 text-[15px] font-semibold text-cream transition-colors duration-140 hover:bg-pine-800"
+    >
+      Try the GPA Calculator
+    </a>
+  </main>
+</BaseLayout>

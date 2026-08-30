@@ -1,0 +1,138 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import StaticSiteHeader from "@/components/StaticSiteHeader.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import { FaqAccordion, type FaqItem } from "@/components/calculator/FaqAccordion";
+
+const FAQ_ITEMS: FaqItem[] = [
+  {
+    question: "Is a 3.5 weighted or unweighted GPA better?",
+    answer:
+      "A 3.5 unweighted is stronger than a 3.5 weighted, since weighted scales inflate GPA for Honors/AP/IB courses. A 3.5 unweighted usually means mostly A- and B+ grades; a 3.5 weighted could reflect a mix of B's in harder classes.",
+  },
+  {
+    question: "Is a 3.5 GPA good enough for graduate school?",
+    answer:
+      "For most master's programs, yes — 3.5 clears the typical 3.0 minimum comfortably. Highly selective PhD programs and professional schools (medicine, law) often expect closer to 3.7+, so check your target program's stated range directly.",
+  },
+  {
+    question: "Does a 3.5 GPA qualify for the Dean's List?",
+    answer:
+      "Often, but not universally — many schools set the Dean's List threshold at 3.5, some at 3.7. Confirm your specific institution's published requirement rather than assuming.",
+  },
+  {
+    question: "Can I raise a 3.5 GPA significantly in one semester?",
+    answer:
+      "It depends on how many credits you've already banked — a heavier existing credit load means each new semester moves the average less. Use the GPA Predictor to see exactly how many credits at what grade it would take.",
+  },
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQ_ITEMS.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: { "@type": "Answer", text: item.answer },
+  })),
+};
+---
+
+<BaseLayout
+  title="Is a 3.5 GPA Good? | gpaestimate.com"
+  description="A 3.5 GPA is generally considered strong — here's what it means for college, grad school, Dean's List, and scholarship eligibility."
+  structuredData={structuredData}
+>
+  <StaticSiteHeader currentPath="/is-a-3.5-gpa-good" />
+  <Breadcrumbs items={[{ label: "GPA Calculator", href: "/" }, { label: "Is a 3.5 GPA Good?" }]} />
+
+  <main id="main-content" class="mx-auto max-w-2xl px-4 py-12 sm:px-6">
+    <h1 class="text-3xl font-bold text-graphite sm:text-4xl">Is a 3.5 GPA good?</h1>
+
+    <p class="mt-5 rounded-panel border border-pine-800/15 bg-porcelain px-6 py-5 text-[17px] leading-relaxed text-graphite">
+      <strong>Short answer:</strong> yes — a 3.5 GPA is generally considered strong. On the standard
+      4.0 scale it corresponds to an A-/B+ average, clears the Dean's List cutoff at most schools,
+      and comfortably meets the minimum GPA most graduate programs and scholarships require.
+      "Good" is still relative to your specific goal, so read on for the context that matters.
+    </p>
+
+    <h2 class="mt-10 text-xl font-semibold text-graphite">Where 3.5 sits on the scale</h2>
+    <p class="mt-2 text-[15px] leading-relaxed text-graphite-muted">
+      A 3.5 GPA means your grades average out to roughly halfway between a B+ (3.3) and an A- (3.7)
+      — in practice, a transcript with a mix of A-'s and B+'s, or straight A-'s pulled down by an
+      occasional B. It sits in the top quarter of the 4.0 scale.
+    </p>
+
+    <div class="mt-5 overflow-x-auto">
+      <table class="w-full min-w-[420px] border-collapse overflow-hidden rounded-panel border border-border bg-white text-left text-sm">
+        <caption class="sr-only">How a 3.5 GPA compares to nearby GPA ranges</caption>
+        <thead>
+          <tr class="bg-mist text-xs font-semibold uppercase tracking-wide text-graphite-muted">
+            <th scope="col" class="px-5 py-2.5">GPA range</th>
+            <th scope="col" class="px-5 py-2.5">Typical read</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-t border-border">
+            <td class="px-5 py-2 tabular-nums font-medium text-graphite">3.7 – 4.0</td>
+            <td class="px-5 py-2 text-graphite-muted">Excellent</td>
+          </tr>
+          <tr class="border-t border-border bg-pine-tint/40" style="background-color:#eef4ee;">
+            <td class="px-5 py-2 tabular-nums font-semibold text-pine-900">3.3 – 3.69 (includes 3.5)</td>
+            <td class="px-5 py-2 font-medium text-pine-900">Strong</td>
+          </tr>
+          <tr class="border-t border-border">
+            <td class="px-5 py-2 tabular-nums font-medium text-graphite">3.0 – 3.29</td>
+            <td class="px-5 py-2 text-graphite-muted">Good</td>
+          </tr>
+          <tr class="border-t border-border">
+            <td class="px-5 py-2 tabular-nums font-medium text-graphite">Below 3.0</td>
+            <td class="px-5 py-2 text-graphite-muted">Requirements vary</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="mt-10 text-xl font-semibold text-graphite">What a 3.5 typically qualifies for</h2>
+    <ul class="mt-3 space-y-2.5">
+      <li class="rounded-card border border-border bg-white px-4 py-3 text-[15px] text-graphite">
+        <strong>Dean's List:</strong> Frequently the cutoff, though some schools set it at 3.7 — check your institution's exact policy.
+      </li>
+      <li class="rounded-card border border-border bg-white px-4 py-3 text-[15px] text-graphite">
+        <strong>Graduate school:</strong> Comfortably clears the ~3.0 minimum most master's programs list; competitive for many, though top-tier PhD and professional programs often look for 3.7+.
+      </li>
+      <li class="rounded-card border border-border bg-white px-4 py-3 text-[15px] text-graphite">
+        <strong>Merit scholarships:</strong> Meets or exceeds the GPA floor for a large share of merit-based awards, which commonly sit between 3.0 and 3.5.
+      </li>
+      <li class="rounded-card border border-border bg-white px-4 py-3 text-[15px] text-graphite">
+        <strong>Latin honors:</strong> Usually below cum laude thresholds, which are typically set higher (often 3.7+) — a 3.5 alone is unlikely to qualify.
+      </li>
+    </ul>
+
+    <p class="mt-5 text-sm text-graphite-muted">
+      Every figure above is a common pattern, not a guarantee — admissions committees, scholarship
+      boards, and registrars each set their own thresholds. Confirm anything that matters against
+      the specific institution or program.
+    </p>
+
+    <h2 class="mt-10 text-xl font-semibold text-graphite">Frequently asked questions</h2>
+    <div class="mt-4">
+      <FaqAccordion items={FAQ_ITEMS} client:visible />
+    </div>
+
+    <div class="mt-10 flex flex-col gap-3 sm:flex-row">
+      <a
+        href="/"
+        class="inline-flex items-center justify-center rounded-pill bg-pine-900 px-5 py-2.5 text-[15px] font-semibold text-cream transition-colors duration-140 hover:bg-pine-800"
+      >
+        Calculate your exact GPA
+      </a>
+      <a
+        href="/what-is-a-good-gpa/"
+        class="inline-flex items-center justify-center rounded-pill border border-border px-5 py-2.5 text-[15px] font-semibold text-graphite transition-colors duration-140 hover:bg-mist"
+      >
+        See what's good at every GPA level
+      </a>
+    </div>
+  </main>
+</BaseLayout>

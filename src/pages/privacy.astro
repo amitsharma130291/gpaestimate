@@ -1,0 +1,25 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import StaticSiteHeader from "@/components/StaticSiteHeader.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+---
+
+<BaseLayout
+  title="Privacy | gpaestimate.com"
+  description="How gpaestimate.com handles your data — in short, it stays on your device."
+>
+  <StaticSiteHeader currentPath="/privacy" />
+  <Breadcrumbs items={[{ label: "GPA Calculator", href: "/" }, { label: "Privacy" }]} />
+  <main id="main-content" class="mx-auto max-w-2xl px-4 py-14 sm:px-6">
+    <h1 class="text-3xl font-bold text-graphite sm:text-4xl">Privacy</h1>
+    <p class="mt-4 text-[15px] leading-relaxed text-graphite-muted">
+      gpaestimate.com does not require an account and does not send the courses, grades, or
+      credits you enter to a server. When you select "Save semester," that data is written to
+      your browser's local storage and stays on your device — it is not transmitted anywhere.
+    </p>
+    <p class="mt-4 text-[15px] leading-relaxed text-graphite-muted">
+      Clearing your browser's site data for gpaestimate.com removes any saved semesters. We do
+      not use tracking cookies to build advertising profiles.
+    </p>
+  </main>
+</BaseLayout>

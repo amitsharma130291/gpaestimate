@@ -1,0 +1,19 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import StaticSiteHeader from "@/components/StaticSiteHeader.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import ComingSoon from "@/components/ComingSoon.astro";
+---
+
+<BaseLayout
+  title="University-Specific GPA Calculators | gpaestimate.com"
+  description="GPA calculators tuned to specific university grading scales."
+  noindex
+>
+  <StaticSiteHeader currentPath="/university-calculators" />
+  <Breadcrumbs items={[{ label: "GPA Calculator", href: "/" }, { label: "University Calculators" }]} />
+  <ComingSoon
+    heading="University Calculators"
+    description="Grading scales tuned to specific universities are on the way."
+  />
+</BaseLayout>

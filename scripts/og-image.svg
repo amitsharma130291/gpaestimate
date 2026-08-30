@@ -1,0 +1,33 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#123227"/>
+      <stop offset="1" stop-color="#0e211b"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- brand mark: real favicon icon composited in by the build script at (46,44) size 64x64 -->
+  <text x="122" y="83" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" fill="#f4efe1">gpaestimate.com</text>
+
+  <!-- live gpa label -->
+  <text x="80" y="200" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="600" letter-spacing="6" fill="#cfd6c8">LIVE GPA</text>
+
+  <!-- big number -->
+  <text x="76" y="400" font-family="Arial, Helvetica, sans-serif" font-size="260" font-weight="700" fill="#f4efe1">3.65</text>
+
+  <!-- chartreuse status dot + updated now -->
+  <circle cx="86" cy="440" r="9" fill="#d4f24e"/>
+  <text x="106" y="449" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="500" fill="#f4efe1">Updated now</text>
+
+  <!-- tagline -->
+  <text x="80" y="520" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="600" fill="#f4efe1">Calculate. Predict. Improve your GPA.</text>
+
+  <!-- trust line -->
+  <text x="80" y="562" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="400" fill="#cfd6c8">Free &#8226; Instant &#8226; No account needed</text>
+
+  <!-- standing scale decorative bar -->
+  <rect x="80" y="592" width="1040" height="6" rx="3" fill="#24594a"/>
+  <rect x="80" y="592" width="740" height="6" rx="3" fill="#d4f24e"/>
+</svg>

@@ -1,0 +1,19 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import StaticSiteHeader from "@/components/StaticSiteHeader.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import ComingSoon from "@/components/ComingSoon.astro";
+---
+
+<BaseLayout
+  title="Grade to GPA Converter | gpaestimate.com"
+  description="Convert individual letter grades into grade-point values across common scales."
+  noindex
+>
+  <StaticSiteHeader currentPath="/grade-to-gpa" />
+  <Breadcrumbs items={[{ label: "GPA Calculator", href: "/" }, { label: "Grade to GPA Converter" }]} />
+  <ComingSoon
+    heading="Grade to GPA Converter"
+    description="A quick letter-grade to grade-point converter is on its way."
+  />
+</BaseLayout>

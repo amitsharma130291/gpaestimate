@@ -1,0 +1,63 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import StaticSiteHeader from "@/components/StaticSiteHeader.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+---
+
+<BaseLayout
+  title="Methodology | gpaestimate.com"
+  description="How gpaestimate.com calculates GPA, where grading-scale data comes from, and what our numbers do and don't guarantee."
+>
+  <StaticSiteHeader currentPath="/methodology" />
+  <Breadcrumbs items={[{ label: "GPA Calculator", href: "/" }, { label: "Methodology" }]} />
+  <main id="main-content" class="mx-auto max-w-2xl px-4 py-14 sm:px-6">
+    <h1 class="text-3xl font-bold text-graphite sm:text-4xl">Methodology</h1>
+    <p class="mt-2 text-sm text-graphite-muted">Last reviewed: August 2026</p>
+
+    <p class="mt-6 text-[15px] leading-relaxed text-graphite-muted">
+      This page explains exactly how gpaestimate.com calculates the numbers it shows you, and
+      what those numbers do and don't tell you.
+    </p>
+
+    <h2 class="mt-8 text-xl font-semibold text-graphite">The calculation</h2>
+    <p class="mt-2 text-[15px] leading-relaxed text-graphite-muted">
+      For every course, we multiply its grade-point value by its credit hours to get quality
+      points. We sum quality points across all valid rows and divide by total attempted credits.
+      No rounding happens until the final GPA, credit total, and quality-point total are
+      displayed, each to two decimal places.
+    </p>
+
+    <h2 class="mt-8 text-xl font-semibold text-graphite">Grading scales</h2>
+    <p class="mt-2 text-[15px] leading-relaxed text-graphite-muted">
+      The grade-point values behind each scale are configuration data, not hardcoded logic — this
+      is what lets us add more institutional scales over time. The "Standard 4.0" scale reflects
+      the plus/minus convention used by most U.S. colleges. University-specific grading
+      information should always be confirmed against official institutional sources, since
+      schools set their own policies and can change them.
+    </p>
+
+    <h2 class="mt-8 text-xl font-semibold text-graphite">What our numbers are — and aren't</h2>
+    <ul class="mt-2 list-disc space-y-2 pl-5 text-[15px] leading-relaxed text-graphite-muted">
+      <li>Results are estimates. Verify anything that matters against your official transcript.</li>
+      <li>
+        Standing labels like "Typical Dean's List range" describe common patterns, not your
+        school's actual policy — Dean's List, honors, and probation thresholds vary by
+        institution.
+      </li>
+      <li>
+        The GPA Predictor solves a simple algebraic target; it doesn't know your school's specific
+        rules about repeated courses, grade replacement, or rounding.
+      </li>
+    </ul>
+
+    <h2 class="mt-8 text-xl font-semibold text-graphite">Your data</h2>
+    <p class="mt-2 text-[15px] leading-relaxed text-graphite-muted">
+      Calculator data remains on your device unless you explicitly choose to save a semester,
+      which stores it in your browser's local storage only. Nothing is sent to a server.
+    </p>
+
+    <p class="mt-8 text-sm text-graphite-soft">
+      This page is educational information, not academic, financial, or admissions advice.
+    </p>
+  </main>
+</BaseLayout>

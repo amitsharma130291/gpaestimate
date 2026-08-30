@@ -1,0 +1,19 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import StaticSiteHeader from "@/components/StaticSiteHeader.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import ComingSoon from "@/components/ComingSoon.astro";
+---
+
+<BaseLayout
+  title="How to Raise Your GPA | gpaestimate.com"
+  description="Practical, credit-aware strategies for improving your GPA over time."
+  noindex
+>
+  <StaticSiteHeader currentPath="/how-to-raise-your-gpa" />
+  <Breadcrumbs items={[{ label: "GPA Calculator", href: "/" }, { label: "How to Raise Your GPA" }]} />
+  <ComingSoon
+    heading="How to Raise Your GPA"
+    description="A practical guide to raising your GPA, credit by credit, is on its way."
+  />
+</BaseLayout>

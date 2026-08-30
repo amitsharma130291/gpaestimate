@@ -1,0 +1,176 @@
+@import "tailwindcss";
+
+/*
+  Design tokens for the GPA Calculator Hub.
+  Palette: mist-white background, graphite text, dark pine-green brand,
+  cream text on dark surfaces, chartreuse live-accent, muted terracotta CTA.
+*/
+@theme {
+  --color-mist: #f5f6f2;
+  --color-porcelain: #eef0e8;
+  --color-surface: #ffffff;
+  --color-border: #e4e5df;
+  --color-border-strong: #d3d5cc;
+
+  --color-graphite: #23261f;
+  --color-graphite-muted: #676d63;
+  --color-graphite-soft: #8a8f83;
+
+  --color-pine-950: #0e211b;
+  --color-pine-900: #123227;
+  --color-pine-800: #1a4536;
+  --color-pine-700: #24594a;
+
+  --color-cream: #f4efe1;
+  --color-cream-muted: #cfd6c8;
+
+  --color-chartreuse: #d4f24e;
+  --color-chartreuse-dark: #a9c22f;
+
+  --color-terracotta: #bd5732;
+  --color-terracotta-dark: #9e461f;
+  --color-terracotta-bg: #fbf1e9;
+  --color-terracotta-border: #f0d7c4;
+  --color-terracotta-text: #7c3a1c;
+
+  --radius-panel: 18px;
+  --radius-card: 14px;
+  --radius-control: 10px;
+  --radius-pill: 999px;
+
+  --shadow-header: 0 1px 0 0 rgba(35, 38, 31, 0.06);
+  --shadow-header-scrolled: 0 4px 16px -8px rgba(35, 38, 31, 0.18), 0 1px 0 0 rgba(35, 38, 31, 0.08);
+  --shadow-panel: 0 1px 2px 0 rgba(35, 38, 31, 0.04);
+  --shadow-focus: 0 0 0 3px rgba(26, 69, 54, 0.22);
+
+  --ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --font-sans:
+    ui-sans-serif, "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Helvetica, Arial,
+    "Noto Sans", sans-serif;
+}
+
+:root {
+  color-scheme: light;
+}
+
+* {
+  border-color: var(--color-border);
+}
+
+html {
+  font-family: var(--font-sans);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-mist);
+  color: var(--color-graphite);
+}
+
+/* Tabular numerals everywhere GPA figures render, so digit width never shifts. */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* Consistent, visible focus ring across native + custom controls. */
+:focus-visible {
+  outline: 2px solid var(--color-pine-700);
+  outline-offset: 2px;
+  border-radius: var(--radius-control);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/*
+  One-time scroll-reveal for major lower-page sections only (never for
+  individual paragraphs/list items). Content is visible by default so it
+  never depends on JavaScript running — the class only adds a starting state
+  that JS then removes via .is-visible once the section enters the viewport.
+*/
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 0.4s var(--ease-standard),
+    transform 0.4s var(--ease-standard);
+}
+
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-on-scroll {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+@media (scripting: none) {
+  .reveal-on-scroll {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/*
+  Header brand logo. Sized by width with height:auto so the source's own
+  aspect ratio (2040x497, ~4.1:1) is always preserved — never set both a
+  fixed width and a fixed height here, or object-fit will letterbox it.
+  Breakpoints mirror desktop/laptop/tablet/mobile/very-small-mobile tiers.
+*/
+.site-logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.site-logo img {
+  display: block;
+  width: clamp(270px, 19.5vw, 300px);
+  height: auto;
+  max-height: 72px;
+  object-fit: contain;
+}
+
+@media (max-width: 1439px) {
+  .site-logo img {
+    width: clamp(248px, 22.5vw, 278px);
+    max-height: 66px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .site-logo img {
+    width: clamp(218px, 27vw, 248px);
+    max-height: 63px;
+  }
+}
+
+@media (max-width: 767px) {
+  .site-logo img {
+    width: clamp(203px, 45vw, 225px);
+    max-height: 60px;
+  }
+}
+
+@media (max-width: 379px) {
+  .site-logo img {
+    width: 195px;
+    max-height: 54px;
+  }
+}

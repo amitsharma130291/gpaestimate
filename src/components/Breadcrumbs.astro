@@ -1,0 +1,51 @@
+---
+interface Crumb {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  items: Crumb[];
+}
+
+const { items } = Astro.props;
+const site = Astro.site ?? new URL("https://gpaestimate.com");
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: items.map((item, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    name: item.label,
+    ...(item.href ? { item: new URL(item.href, site).toString() } : {}),
+  })),
+};
+---
+
+<nav aria-label="Breadcrumb" class="mx-auto max-w-[1440px] px-4 pt-4 sm:px-6 lg:px-10">
+  <ol class="flex flex-wrap items-center gap-1.5 text-sm text-graphite-muted">
+    {
+      items.map((item, index) => (
+        <li class="flex items-center gap-1.5">
+          {index > 0 && (
+            <span aria-hidden="true" class="text-graphite-soft">
+              /
+            </span>
+          )}
+          {item.href && index < items.length - 1 ? (
+            <a href={item.href} class="transition-colors duration-140 hover:text-pine-800">
+              {item.label}
+            </a>
+          ) : (
+            <span aria-current="page" class="font-medium text-graphite">
+              {item.label}
+            </span>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</nav>
+
+<script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />

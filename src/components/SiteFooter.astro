@@ -1,0 +1,88 @@
+---
+const YEAR = new Date().getUTCFullYear();
+
+const columns = [
+  {
+    heading: "GPA Tools",
+    links: [
+      { label: "GPA Calculator", href: "/" },
+      { label: "Weighted GPA Calculator", href: "/weighted-gpa-calculator" },
+      { label: "Cumulative GPA Calculator", href: "/cumulative-gpa-calculator" },
+      { label: "High School GPA Calculator", href: "/high-school-gpa-calculator" },
+      { label: "GPA Predictor", href: "/gpa-predictor" },
+      { label: "Final Grade Calculator", href: "/final-grade-calculator" },
+      { label: "Grade to GPA Converter", href: "/grade-to-gpa" },
+    ],
+  },
+  {
+    heading: "Universities",
+    links: [
+      { label: "University GPA Calculators", href: "/university-calculators" },
+      { label: "Grading Scales", href: "/grading-scales" },
+      { label: "GPA Requirements", href: "/gpa-requirements" },
+    ],
+  },
+  {
+    heading: "Resources",
+    links: [
+      { label: "GPA Guides", href: "/resources" },
+      { label: "What Is a Good GPA?", href: "/what-is-a-good-gpa" },
+      { label: "Weighted vs. Unweighted GPA", href: "/#weighted-vs-unweighted" },
+      { label: "How to Raise Your GPA", href: "/how-to-raise-your-gpa" },
+    ],
+  },
+  {
+    heading: "Company",
+    links: [
+      { label: "About", href: "/about" },
+      { label: "Methodology", href: "/methodology" },
+      { label: "Contact", href: "/contact" },
+      { label: "Privacy", href: "/privacy" },
+      { label: "Terms", href: "/terms" },
+    ],
+  },
+];
+---
+
+<footer class="border-t border-border bg-white">
+  <div class="mx-auto max-w-[1440px] px-4 py-12 sm:px-6 lg:px-10 lg:py-14">
+    <div class="grid grid-cols-2 gap-8 sm:grid-cols-4">
+      {
+        columns.map((col) => (
+          <div>
+            <h2 class="text-sm font-semibold text-graphite">{col.heading}</h2>
+            <ul class="mt-3 space-y-2.5">
+              {col.links.map((link) => (
+                <li>
+                  <a
+                    href={link.href}
+                    class="text-sm text-graphite-muted transition-colors duration-140 hover:text-pine-800"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="mt-10 flex flex-col gap-4 border-t border-border pt-8 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <img src="/logo.png" alt="GPA Estimate" class="h-7 w-auto" />
+        <p class="mt-2 max-w-md text-sm text-graphite-muted">
+          Free, instant GPA calculation and prediction tools for high-school and college students —
+          no account required.
+        </p>
+      </div>
+      <div class="flex flex-col gap-1.5 text-sm text-graphite-muted sm:items-end">
+        <p>© {YEAR} gpaestimate.com. Calculations stay on your device.</p>
+        <p class="max-w-md sm:text-right">
+          Educational information only — not academic or financial advice. Verify results against
+          your official transcript and institution.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>

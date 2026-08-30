@@ -1,0 +1,490 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { GpaCalculatorApp } from "@/components/calculator/GpaCalculatorApp";
+import { FaqAccordion, type FaqItem } from "@/components/calculator/FaqAccordion";
+import { createInitialCourses } from "@/lib/calculatorReducer";
+import { calculateGpa } from "@/lib/gpa";
+import { GRADING_SCALES, gradePoints } from "@/lib/gradingScales";
+import Icon from "@/components/Icon.astro";
+
+const scale = GRADING_SCALES["standard-4"];
+const exampleCourses = createInitialCourses();
+const example = calculateGpa(exampleCourses, scale);
+
+const MEANING_RANGES = [
+  { range: "3.7 – 4.0", label: "Excellent" },
+  { range: "3.3 – 3.69", label: "Strong" },
+  { range: "3.0 – 3.29", label: "Good" },
+  { range: "Below 3.0", label: "Requirements vary" },
+];
+
+const MISTAKES = [
+  "Averaging letter grades without considering credits",
+  "Mixing weighted and unweighted scales",
+  "Including withdrawn or pass/fail courses incorrectly",
+  "Assuming every university uses the same scale",
+  "Rounding individual courses too early",
+  "Confusing semester GPA with cumulative GPA",
+];
+
+const FAQ_ITEMS: FaqItem[] = [
+  {
+    question: "Does this calculator save my grades anywhere?",
+    answer:
+      "No account or server is used. Selecting “Save semester” stores your courses in your browser's local storage, on your device only.",
+  },
+  {
+    question: "What is the difference between weighted and unweighted GPA?",
+    answer:
+      "Unweighted GPA scores every course equally on a 4.0 scale. Weighted GPA adds extra points for honors, AP, or IB courses — often on a 5.0 scale — to reflect their difficulty.",
+  },
+  {
+    question: "How do credit hours affect GPA?",
+    answer:
+      "Each course's grade points are multiplied by its credit hours before averaging, so a 4-credit A counts for more of your GPA than a 1-credit A. Courses aren't averaged as if every class carried equal weight.",
+  },
+  {
+    question: "Does an A+ count as 4.0 or 4.33?",
+    answer:
+      "It depends on your institution. Many U.S. colleges cap an A+ at 4.0, matching a regular A, while others use a 4.33 scale that rewards A+ separately. Check your school's official grading policy to be sure.",
+  },
+  {
+    question: "How do I calculate my cumulative GPA?",
+    answer:
+      "Add together the quality points and credits from every semester you've completed, then divide total quality points by total credits. The Cumulative GPA Calculator automates this once you've saved each semester.",
+  },
+  {
+    question: "Can I calculate GPA without plus and minus grades?",
+    answer:
+      "Yes — switch the grading-scale selector above to “Standard 4.0 (whole letter)” to use flat A/B/C/D/F values instead of plus/minus increments.",
+  },
+  {
+    question: "What GPA do I need for the Dean's List?",
+    answer:
+      "This varies significantly by institution — some require a 3.5, others 3.7 or higher, and some also set a minimum credit load. Check your school's academic policies for the exact threshold.",
+  },
+  {
+    question: "How can I predict the grades needed to reach my target GPA?",
+    answer:
+      "Use the GPA Predictor, which takes your current credits and quality points and calculates the average grade you'd need across your remaining credits to hit a target GPA.",
+  },
+  {
+    question: "Do pass/fail courses affect GPA?",
+    answer:
+      "Most schools exclude pass/fail courses from GPA calculations entirely — they count toward credits earned but not toward quality points. Confirm with your registrar, since policies differ.",
+  },
+  {
+    question: "How often should I recalculate my GPA?",
+    answer:
+      "Recalculate whenever grades post for a course, at the end of each semester, and before applying to programs, scholarships, or jobs that ask for your GPA.",
+  },
+];
+
+const RESOURCES = [
+  {
+    title: "How to calculate GPA",
+    description: "A step-by-step walkthrough of quality points and grade averaging.",
+    href: "/how-gpa-works",
+  },
+  {
+    title: "Is a 3.5 GPA good?",
+    description: "See how a 3.5 compares across typical GPA ranges.",
+    href: "/is-a-3.5-gpa-good/",
+  },
+  {
+    title: "How to raise your GPA",
+    description: "Practical strategies for pulling your average up over time.",
+    href: "/how-to-raise-your-gpa",
+  },
+  {
+    title: "GPA Predictor",
+    description: "Find the grades you need in upcoming courses to hit a target.",
+    href: "/gpa-predictor/",
+  },
+  {
+    title: "Cumulative GPA Calculator",
+    description: "Combine every saved semester into one running average.",
+    href: "/cumulative-gpa-calculator/",
+  },
+  {
+    title: "Percentage to GPA Converter",
+    description: "Translate a percentage grade into an estimated GPA value.",
+    href: "/percentage-to-gpa",
+  },
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "GPA Calculator",
+  url: "https://gpaestimate.com/",
+  applicationCategory: "EducationApplication",
+  operatingSystem: "Any",
+  description:
+    "Free GPA calculator that updates instantly as you enter grades and credits, with weighted, cumulative, and university-specific scales.",
+  offers: {
+    "@type": "Offer",
+    price: "0",
+    priceCurrency: "USD",
+  },
+};
+
+const faqStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQ_ITEMS.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.answer,
+    },
+  })),
+};
+
+const SECTION_TOP = "pt-12 sm:pt-14 lg:pt-16";
+const SUBSECTION_TOP = "mt-10 sm:mt-12 lg:mt-14";
+---
+
+<BaseLayout
+  title="GPA Calculator — Live GPA Tracking | gpaestimate.com"
+  description="Calculate your GPA instantly as you enter grades, with weighted, cumulative, and university-specific scales, plus a GPA predictor."
+  structuredData={structuredData}
+>
+  <main id="main-content">
+    <GpaCalculatorApp client:load />
+
+    <div class="bg-porcelain">
+      <script type="application/ld+json" is:inline set:html={JSON.stringify(faqStructuredData)} />
+
+    <!-- Section 1: How this GPA calculator works -->
+    <section aria-labelledby="how-it-works" class={`${SECTION_TOP} reveal-on-scroll px-4 sm:px-6 lg:px-10`}>
+      <div class="mx-auto max-w-[820px]">
+        <h2 id="how-it-works" class="text-2xl font-bold text-graphite sm:text-3xl">
+          How this GPA calculator works
+        </h2>
+        <p class="mt-3 text-[15px] leading-relaxed text-graphite-muted">
+          Every letter grade has a grade-point value on a 4.0 scale. To find your GPA, that grade
+          point is multiplied by the course's credit hours to produce <strong>quality points</strong>.
+          Quality points from every course are added together, then divided by your total
+          attempted credits.
+        </p>
+
+        <div class={`${SUBSECTION_TOP} rounded-panel border border-pine-800/15 bg-white px-6 py-6 text-center sm:py-8`}>
+          <p class="text-xs font-semibold uppercase tracking-[0.18em] text-graphite-muted">
+            The formula
+          </p>
+          <p class="mt-3 text-xl font-semibold tracking-tight text-pine-900 sm:text-2xl">
+            GPA = total quality points ÷ total attempted credits
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Worked GPA example -->
+    <section aria-labelledby="worked-example" class={`${SECTION_TOP} reveal-on-scroll px-4 sm:px-6 lg:px-10`}>
+      <div class="mx-auto max-w-[820px]">
+        <h2 id="worked-example" class="text-2xl font-bold text-graphite sm:text-3xl">
+          Worked GPA example
+        </h2>
+        <p class="mt-3 text-[15px] leading-relaxed text-graphite-muted">
+          Here's the math behind the sample schedule shown in the calculator above. Edit any
+          course up there and your live results will update instantly — this table stays fixed
+          as a reference example.
+        </p>
+      </div>
+
+      <div class="mx-auto mt-6 max-w-[1000px] overflow-x-auto">
+        <table class="w-full min-w-[540px] border-collapse overflow-hidden rounded-panel border border-border bg-white text-left text-sm">
+          <caption class="sr-only">Worked GPA example using a sample four-course schedule</caption>
+          <thead>
+            <tr class="bg-mist text-xs font-semibold uppercase tracking-wide text-graphite-muted">
+              <th scope="col" class="px-5 py-3">Course</th>
+              <th scope="col" class="px-5 py-3">Grade</th>
+              <th scope="col" class="px-5 py-3">Grade value</th>
+              <th scope="col" class="px-5 py-3">Credits</th>
+              <th scope="col" class="px-5 py-3">Quality points</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              exampleCourses.map((course, index) => (
+                <tr class="border-t border-border">
+                  <th scope="row" class="px-5 py-3 font-medium text-graphite">
+                    {course.name}
+                  </th>
+                  <td class="px-5 py-3 tabular-nums text-graphite">{course.grade}</td>
+                  <td class="px-5 py-3 tabular-nums text-graphite-muted">
+                    {gradePoints(scale, course.grade)?.toFixed(1)}
+                  </td>
+                  <td class="px-5 py-3 tabular-nums text-graphite-muted">{course.credits}</td>
+                  <td class="px-5 py-3 tabular-nums font-semibold text-graphite">
+                    {example.rows[index].qualityPoints?.toFixed(1)}
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <div class="mx-auto mt-5 max-w-[1000px] rounded-panel bg-pine-950 px-6 py-5 text-cream sm:px-8">
+        <dl class="grid grid-cols-1 gap-4 text-center sm:grid-cols-3">
+          <div>
+            <dt class="text-xs uppercase tracking-wide text-cream-muted">Total credits</dt>
+            <dd class="tabular-nums mt-1 text-2xl font-bold">{example.totalCredits}</dd>
+          </div>
+          <div>
+            <dt class="text-xs uppercase tracking-wide text-cream-muted">Total quality points</dt>
+            <dd class="tabular-nums mt-1 text-2xl font-bold">{example.totalQualityPoints}</dd>
+          </div>
+          <div>
+            <dt class="text-xs uppercase tracking-wide text-cream-muted">
+              GPA ({example.totalQualityPoints} ÷ {example.totalCredits})
+            </dt>
+            <dd class="tabular-nums mt-1 text-2xl font-bold text-chartreuse">{example.gpa.toFixed(2)}</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- Section 3: Standard 4.0 grading scale -->
+    <section aria-labelledby="grading-scale" class={`${SECTION_TOP} reveal-on-scroll px-4 sm:px-6 lg:px-10`}>
+      <div class="mx-auto max-w-[820px]">
+        <h2 id="grading-scale" class="text-2xl font-bold text-graphite sm:text-3xl">
+          Standard 4.0 grading scale
+        </h2>
+        <p class="mt-3 text-[15px] leading-relaxed text-graphite-muted">
+          This is the scale used by default above. Individual institutions may use different
+          values, omit plus/minus grades entirely, or use a 4.33 scale that rewards an A+ above a
+          regular A.
+        </p>
+      </div>
+
+      <div class="mx-auto mt-6 max-w-[560px] overflow-x-auto">
+        <table class="w-full border-collapse overflow-hidden rounded-panel border border-border bg-white text-left text-sm">
+          <caption class="sr-only">Standard 4.0 letter grade to grade-point value table</caption>
+          <thead>
+            <tr class="bg-mist text-xs font-semibold uppercase tracking-wide text-graphite-muted">
+              <th scope="col" class="px-5 py-2.5">Letter grade</th>
+              <th scope="col" class="px-5 py-2.5">Grade points</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              scale.grades.map((g) => (
+                <tr class="border-t border-border">
+                  <th scope="row" class="px-5 py-2 font-medium text-graphite">
+                    {g.grade}
+                  </th>
+                  <td class="px-5 py-2 tabular-nums text-graphite-muted">{g.points.toFixed(1)}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <p class="mx-auto mt-5 max-w-[820px] text-[15px] text-graphite-muted">
+        <a
+          href="/grading-scales"
+          class="inline-flex items-center gap-1 font-medium text-pine-800 underline decoration-pine-800/30 underline-offset-2 transition-colors duration-140 hover:text-pine-900"
+        >
+          Find your university's grading scale
+          <Icon name="arrow-right" size={14} />
+        </a>
+      </p>
+    </section>
+
+    <!-- Section 4: What does your GPA mean? -->
+    <section aria-labelledby="what-your-gpa-means" class={`${SECTION_TOP} reveal-on-scroll px-4 sm:px-6 lg:px-10`}>
+      <div class="mx-auto max-w-[820px]">
+        <h2 id="what-your-gpa-means" class="text-2xl font-bold text-graphite sm:text-3xl">
+          What does your GPA mean?
+        </h2>
+      </div>
+
+      <div class="mx-auto mt-6 grid max-w-[820px] grid-cols-2 gap-3 sm:grid-cols-4">
+        {
+          MEANING_RANGES.map((item) => (
+            <div class="rounded-card border border-border bg-white p-4 text-center">
+              <p class="tabular-nums text-sm font-semibold text-pine-900">{item.range}</p>
+              <p class="mt-1 text-sm text-graphite-muted">{item.label}</p>
+            </div>
+          ))
+        }
+      </div>
+
+      <p class="mx-auto mt-5 max-w-[820px] text-sm leading-relaxed text-graphite-muted">
+        These ranges are general reference points, not guarantees. Admissions, scholarships,
+        honors programs, and academic-standing requirements are set independently by each
+        institution and program — always confirm specifics with your school.
+      </p>
+    </section>
+
+    <!-- Section 5: Weighted vs. unweighted GPA -->
+    <section aria-labelledby="weighted-vs-unweighted" class={`${SECTION_TOP} reveal-on-scroll px-4 sm:px-6 lg:px-10`}>
+      <div class="mx-auto max-w-[820px]">
+        <h2 id="weighted-vs-unweighted" class="text-2xl font-bold text-graphite sm:text-3xl">
+          Weighted versus unweighted GPA
+        </h2>
+      </div>
+
+      <div class="mx-auto mt-6 grid max-w-[820px] grid-cols-1 gap-4 sm:grid-cols-2">
+        <div class="rounded-card border border-border bg-white p-5">
+          <h3 class="font-semibold text-graphite">Unweighted GPA</h3>
+          <ul class="mt-3 space-y-2 text-sm text-graphite-muted">
+            <li>Usually uses a 4.0 scale</li>
+            <li>Treats course difficulty equally</li>
+            <li>Common for college coursework</li>
+          </ul>
+        </div>
+        <div class="rounded-card border border-terracotta-border bg-terracotta-bg p-5">
+          <h3 class="font-semibold text-terracotta-text">Weighted GPA</h3>
+          <ul class="mt-3 space-y-2 text-sm text-graphite-muted">
+            <li>May award additional points for AP, IB, or honors classes</li>
+            <li>Often uses a 5.0 or custom scale</li>
+            <li>Common in high-school reporting</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mx-auto mt-5 max-w-[820px]">
+        <a
+          href="/weighted-gpa-calculator/"
+          class="group inline-flex items-center gap-2 rounded-pill bg-pine-900 px-5 py-2.5 text-sm font-semibold text-cream transition-colors duration-160 hover:bg-pine-800"
+        >
+          Calculate weighted GPA
+          <Icon
+            name="arrow-right"
+            size={15}
+            class="transition-transform duration-160 group-hover:translate-x-1"
+          />
+        </a>
+      </div>
+    </section>
+
+    <!-- Section 6: Common GPA calculation mistakes -->
+    <section aria-labelledby="common-mistakes" class={`${SECTION_TOP} reveal-on-scroll px-4 sm:px-6 lg:px-10`}>
+      <div class="mx-auto max-w-[820px]">
+        <h2 id="common-mistakes" class="text-2xl font-bold text-graphite sm:text-3xl">
+          Common GPA calculation mistakes
+        </h2>
+        <ul class="mt-5 space-y-3">
+          {
+            MISTAKES.map((mistake) => (
+              <li class="flex items-start gap-3 rounded-card border border-border bg-white px-4 py-3 text-[15px] text-graphite">
+                <span aria-hidden="true" class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-terracotta" />
+                {mistake}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section aria-labelledby="faq" class={`${SECTION_TOP} reveal-on-scroll px-4 sm:px-6 lg:px-10`}>
+      <div class="mx-auto max-w-[820px]">
+        <h2 id="faq" class="text-2xl font-bold text-graphite sm:text-3xl">
+          Frequently asked questions
+        </h2>
+        <div class="mt-6">
+          <FaqAccordion items={FAQ_ITEMS} client:visible />
+        </div>
+      </div>
+    </section>
+
+    <!-- Methodology -->
+    <section aria-labelledby="methodology" class={`${SECTION_TOP} reveal-on-scroll px-4 sm:px-6 lg:px-10`}>
+      <div class="mx-auto max-w-[820px] rounded-panel border border-border bg-white p-6 sm:p-8">
+        <h2 id="methodology" class="flex items-center gap-2 text-xl font-bold text-graphite">
+          <Icon name="book-open" size={20} class="text-pine-800" />
+          Accurate calculations, transparent methodology
+        </h2>
+        <ul class="mt-4 space-y-2.5 text-sm text-graphite-muted">
+          <li>Calculations use the grading scale selected above.</li>
+          <li>University grading information should come from official institutional sources.</li>
+          <li>Results are estimates and should be verified against an official transcript.</li>
+          <li>
+            Calculator data remains on your device unless you explicitly save or sync it.
+          </li>
+        </ul>
+        <div class="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-border pt-4 text-sm">
+          <p class="text-graphite-muted">Last reviewed: August 2026</p>
+          <a
+            href="/methodology"
+            class="inline-flex items-center gap-1 font-medium text-pine-800 transition-colors duration-140 hover:text-pine-900"
+          >
+            Read our full methodology
+            <Icon name="external-link" size={13} />
+          </a>
+        </div>
+        <p class="mt-4 text-xs text-graphite-soft">
+          This page provides educational information only and is not academic, financial, or
+          admissions advice.
+        </p>
+      </div>
+    </section>
+
+    <!-- Related resources -->
+    <section aria-labelledby="related-resources" class={`${SECTION_TOP} reveal-on-scroll px-4 sm:px-6 lg:px-10`}>
+      <div class="mx-auto max-w-[1440px]">
+        <h2 id="related-resources" class="text-2xl font-bold text-graphite sm:text-3xl">
+          Related resources
+        </h2>
+        <div class="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {
+            RESOURCES.map((resource) => (
+              <a
+                href={resource.href}
+                class="group rounded-card border border-border bg-white p-5 transition-colors duration-140 hover:border-border-strong hover:bg-mist"
+              >
+                <p class="font-semibold text-graphite">{resource.title}</p>
+                <p class="mt-1.5 text-sm text-graphite-muted">{resource.description}</p>
+                <span class="mt-3 inline-flex items-center gap-1 text-sm font-medium text-pine-800">
+                  Read more
+                  <Icon
+                    name="arrow-right"
+                    size={14}
+                    class="transition-transform duration-160 group-hover:translate-x-1"
+                  />
+                </span>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Final conversion panel -->
+    <section
+      aria-labelledby="final-cta"
+      class={`${SECTION_TOP} reveal-on-scroll px-4 pb-16 sm:px-6 sm:pb-20 lg:px-10 lg:pb-24`}
+    >
+      <div class="mx-auto max-w-[1000px] rounded-panel bg-pine-950 px-6 py-10 text-center text-cream sm:px-12 sm:py-14">
+        <h2 id="final-cta" class="text-2xl font-bold sm:text-3xl">
+          Know your GPA. Plan what comes next.
+        </h2>
+        <p class="mx-auto mt-3 max-w-md text-[15px] text-cream-muted">
+          Test future grades, set a target, and build a realistic path toward it.
+        </p>
+        <div class="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <a
+            href="/gpa-predictor/"
+            class="w-full rounded-pill bg-terracotta px-6 py-3 text-[15px] font-semibold text-white transition-colors duration-160 hover:bg-terracotta-dark sm:w-auto"
+          >
+            Predict my GPA
+          </a>
+          <a
+            href="/weighted-gpa-calculator/"
+            class="w-full rounded-pill border border-cream/25 px-6 py-3 text-[15px] font-semibold text-cream transition-colors duration-160 hover:bg-pine-800 sm:w-auto"
+          >
+            Calculate weighted GPA
+          </a>
+        </div>
+      </div>
+    </section>
+    </div>
+  </main>
+</BaseLayout>

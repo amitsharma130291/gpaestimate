@@ -1,0 +1,129 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { WeightedGpaTool } from "@/components/calculator/WeightedGpaTool";
+import { FaqAccordion, type FaqItem } from "@/components/calculator/FaqAccordion";
+
+const FAQ_ITEMS: FaqItem[] = [
+  {
+    question: "How do you calculate a weighted GPA?",
+    answer:
+      "Add a bonus to the grade-point value of Honors and AP/IB courses before averaging — commonly +0.5 for Honors and +1.0 for AP/IB — then multiply by credits and divide by total credits, same as an unweighted GPA.",
+  },
+  {
+    question: "What is a 3.7 GPA weighted?",
+    answer:
+      "On most weighted scales, a 3.7 falls in the “strong” range but below the top tier — where a student is landing usually depends on how many Honors/AP courses factored into that number, since the same letter grades produce a higher weighted GPA than unweighted.",
+  },
+  {
+    question: "Is a 4.0 weighted GPA good?",
+    answer:
+      "A 4.0 weighted GPA is typically only average-to-good if most of your schedule is Honors or AP — since those courses can push a GPA well above 4.0, a flat 4.0 may mean mostly regular-level A's rather than a maxed-out weighted schedule.",
+  },
+  {
+    question: "Should I use weighted or unweighted GPA on college applications?",
+    answer:
+      "Most colleges recalculate your GPA using their own formula regardless of what your transcript shows, but it's still worth reporting both — this tool shows them side by side.",
+  },
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "Weighted GPA Calculator",
+  url: "https://gpaestimate.com/weighted-gpa-calculator/",
+  applicationCategory: "EducationApplication",
+  operatingSystem: "Any",
+  description:
+    "Calculate a weighted GPA that adds bonus points for Honors and AP/IB courses, with your unweighted GPA shown side by side.",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+};
+
+const faqStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQ_ITEMS.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: { "@type": "Answer", text: item.answer },
+  })),
+};
+---
+
+<BaseLayout
+  title="Weighted GPA Calculator (Honors & AP/IB) | gpaestimate.com"
+  description="Calculate your weighted GPA instantly, with bonus points for Honors and AP/IB courses shown alongside your unweighted GPA."
+  structuredData={structuredData}
+>
+  <WeightedGpaTool
+    currentPath="/weighted-gpa-calculator"
+    breadcrumbLabel="Weighted GPA Calculator"
+    heading="Weighted GPA Calculator"
+    subtitle="Set each course's level — Regular, Honors, or AP/IB — and see your weighted GPA update instantly, next to your unweighted GPA for comparison."
+    initialCourses={[
+      { id: "wgc-1", name: "AP Calculus", grade: "A-", credits: "4", level: "ap-ib" },
+      { id: "wgc-2", name: "Honors Chemistry", grade: "B+", credits: "4", level: "honors" },
+      { id: "wgc-3", name: "English Composition", grade: "A", credits: "3", level: "regular" },
+    ]}
+    panelNote="An AP/IB A is worth 5.0 weighted here; a Regular A stays at 4.0."
+    client:load
+  />
+
+  <div class="bg-porcelain">
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(faqStructuredData)} />
+
+    <section aria-labelledby="how-weighted-works" class="reveal-on-scroll px-4 pt-12 sm:px-6 sm:pt-14 lg:px-10 lg:pt-16">
+      <div class="mx-auto max-w-[820px]">
+        <h2 id="how-weighted-works" class="text-2xl font-bold text-graphite sm:text-3xl">
+          Weighted vs. unweighted, in one calculator
+        </h2>
+        <p class="mt-3 text-[15px] leading-relaxed text-graphite-muted">
+          A weighted GPA gives extra credit for course difficulty. Most schools add
+          <strong>+0.5</strong> to the grade-point value of Honors courses and <strong>+1.0</strong>
+          to AP, IB, or Dual Enrollment courses — so an A in an AP class is worth 5.0 instead of
+          4.0. An unweighted GPA ignores course level entirely and stays on the plain 4.0 scale.
+          Both numbers come from the exact same grades; only the scale changes.
+        </p>
+        <div class="mt-6 rounded-panel border border-pine-800/15 bg-white px-6 py-6 text-center sm:py-8">
+          <p class="text-xs font-semibold uppercase tracking-[0.18em] text-graphite-muted">
+            The formula
+          </p>
+          <p class="mt-3 text-xl font-semibold tracking-tight text-pine-900 sm:text-2xl">
+            Weighted GPA = Σ (grade points + level bonus) × credits ÷ total credits
+          </p>
+        </div>
+        <p class="mt-4 text-sm text-graphite-muted">
+          Note: exact bonus values vary by school — some cap weighted GPA at 5.0, others use a
+          different scale entirely.{" "}
+          <a
+            href="/grading-scales"
+            class="font-medium text-pine-800 underline decoration-pine-800/30 underline-offset-2 hover:text-pine-900"
+          >
+            Check your school's specific policy
+          </a>.
+        </p>
+      </div>
+    </section>
+
+    <section aria-labelledby="weighted-faq" class="reveal-on-scroll px-4 pt-12 sm:px-6 sm:pt-14 lg:px-10 lg:pt-16">
+      <div class="mx-auto max-w-[820px]">
+        <h2 id="weighted-faq" class="text-2xl font-bold text-graphite sm:text-3xl">
+          Frequently asked questions
+        </h2>
+        <div class="mt-6">
+          <FaqAccordion items={FAQ_ITEMS} client:visible />
+        </div>
+      </div>
+    </section>
+
+    <section class="reveal-on-scroll px-4 pb-16 pt-12 sm:px-6 sm:pb-20 sm:pt-14 lg:px-10 lg:pb-24 lg:pt-16">
+      <div class="mx-auto max-w-[820px] text-center">
+        <a
+          href="/high-school-gpa-calculator/"
+          class="font-medium text-pine-800 underline decoration-pine-800/30 underline-offset-2 hover:text-pine-900"
+        >
+          Building a full high-school schedule? Try the High School GPA Calculator →
+        </a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
