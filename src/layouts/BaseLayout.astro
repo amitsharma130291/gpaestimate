@@ -15,6 +15,8 @@ interface Props {
 const { title, description, structuredData, noindex = false, image = "/og-image.png" } = Astro.props;
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? "https://gpaestimate.com");
 const imageUrl = new URL(image, Astro.site ?? "https://gpaestimate.com");
+
+const GA_MEASUREMENT_ID = "G-7TJ9YK50FW";
 ---
 
 <!doctype html>
@@ -29,6 +31,22 @@ const imageUrl = new URL(image, Astro.site ?? "https://gpaestimate.com");
     <link rel="canonical" href={canonicalUrl} />
     <meta name="generator" content={Astro.generator} />
     {noindex ? <meta name="robots" content="noindex, follow" /> : null}
+
+    {
+      import.meta.env.PROD ? (
+        <>
+          <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} />
+          <script is:inline define:vars={{ GA_MEASUREMENT_ID }}>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(...args) {
+              dataLayer.push(args);
+            }
+            gtag("js", new Date());
+            gtag("config", GA_MEASUREMENT_ID);
+          </script>
+        </>
+      ) : null
+    }
 
     <title>{title}</title>
     <meta name="description" content={description} />
