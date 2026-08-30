@@ -59,6 +59,75 @@ const faqStructuredData = {
   <div class="bg-porcelain">
     <script type="application/ld+json" is:inline set:html={JSON.stringify(faqStructuredData)} />
 
+    <section aria-labelledby="how-to-use-predictor" class="reveal-on-scroll px-4 pt-12 sm:px-6 sm:pt-14 lg:px-10 lg:pt-16">
+      <div class="mx-auto max-w-[820px]">
+        <h2 id="how-to-use-predictor" class="text-2xl font-bold text-graphite sm:text-3xl">
+          How to use the GPA Predictor
+        </h2>
+        <p class="mt-3 text-[15px] leading-relaxed text-graphite-muted">
+          The predictor works backward from a goal: tell it where you stand today and where you
+          want to end up, and it solves for the average grade you need across your remaining
+          credits.
+        </p>
+        <ol class="mt-6 space-y-4">
+          <li class="flex gap-4 rounded-card border border-border bg-white p-4">
+            <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-pine-900 text-sm font-semibold text-cream">1</span>
+            <div>
+              <p class="font-semibold text-graphite">Enter your current credits and quality points</p>
+              <p class="mt-1 text-sm text-graphite-muted">
+                If you've saved a semester on the main GPA Calculator, these fields fill in
+                automatically. Otherwise, pull both numbers from your unofficial transcript, or
+                calculate them fresh on the <a href="/" class="font-medium text-pine-800 underline decoration-pine-800/30 underline-offset-2 hover:text-pine-900">GPA Calculator</a> first.
+              </p>
+            </div>
+          </li>
+          <li class="flex gap-4 rounded-card border border-border bg-white p-4">
+            <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-pine-900 text-sm font-semibold text-cream">2</span>
+            <div>
+              <p class="font-semibold text-graphite">Set your target GPA</p>
+              <p class="mt-1 text-sm text-graphite-muted">
+                This can be a scholarship threshold, a Dean's List cutoff, or a grad-school
+                minimum — whatever number you're working toward.
+              </p>
+            </div>
+          </li>
+          <li class="flex gap-4 rounded-card border border-border bg-white p-4">
+            <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-pine-900 text-sm font-semibold text-cream">3</span>
+            <div>
+              <p class="font-semibold text-graphite">Enter how many credits you have left</p>
+              <p class="mt-1 text-sm text-graphite-muted">
+                Count only the credits you're planning to complete before the target needs to be
+                met — a single semester, or everything left until graduation.
+              </p>
+            </div>
+          </li>
+          <li class="flex gap-4 rounded-card border border-border bg-white p-4">
+            <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-pine-900 text-sm font-semibold text-cream">4</span>
+            <div>
+              <p class="font-semibold text-graphite">Read the required average</p>
+              <p class="mt-1 text-sm text-graphite-muted">
+                The result updates instantly as you edit any field. If it's above 4.0, the target
+                isn't reachable in that many credits — try a lower target or add more remaining
+                credits.
+              </p>
+            </div>
+          </li>
+        </ol>
+        <div class="mt-6 rounded-panel border border-pine-800/15 bg-white px-6 py-6 sm:py-8">
+          <p class="text-xs font-semibold uppercase tracking-[0.18em] text-graphite-muted">
+            Worked example
+          </p>
+          <p class="mt-3 text-[15px] leading-relaxed text-graphite-muted">
+            With 14 credits and 51.1 quality points earned so far (a 3.65 GPA), targeting a 3.80
+            GPA across 15 more credits: <strong class="text-pine-900">3.80 × (14 + 15) − 51.1 =
+            59.1</strong> quality points still needed, divided by 15 remaining credits is a{" "}
+            <strong class="text-pine-900">3.94 average</strong> — reachable, but it takes mostly
+            A's from here.
+          </p>
+        </div>
+      </div>
+    </section>
+
     <section aria-labelledby="predictor-faq" class="reveal-on-scroll px-4 pt-12 sm:px-6 sm:pt-14 lg:px-10 lg:pt-16">
       <div class="mx-auto max-w-[820px]">
         <h2 id="predictor-faq" class="text-2xl font-bold text-graphite sm:text-3xl">
